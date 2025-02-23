@@ -4,7 +4,7 @@ datos requeridos se encuentran en el archivo data.csv. En este laboratorio
 solo puede utilizar las funciones y librerias basicas de python. No puede
 utilizar pandas, numpy o scipy.
 """
-
+import csv
 
 def pregunta_04():
     """
@@ -26,3 +26,15 @@ def pregunta_04():
      ('12', 3)]
 
     """
+
+    # Leer el archivo CSV
+    with open("C:/Users/user/Documents/Analitica_de_datos/2024-2-LAB-01-python-basico-WeslyHuertas/files/input/data.csv", 'r') as archivo:
+        lector = csv.reader(archivo, delimiter=' ')
+        answer = {}
+        for fila in lector:
+            line = fila[0].split('\t')
+            month = line[2].split("-")[1]
+            answer[month] = answer.get(month, 0) + 1 
+    return sorted(answer.items())
+
+print(pregunta_04())
