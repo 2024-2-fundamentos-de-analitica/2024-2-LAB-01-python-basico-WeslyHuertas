@@ -37,4 +37,3 @@ def pregunta_04():
             answer[month] = answer.get(month, 0) + 1 
     return sorted(answer.items())
 
-print(pregunta_04())

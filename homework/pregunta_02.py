@@ -25,6 +25,5 @@ def pregunta_02():
             answer[line[0]] = answer.get(line[0], 0) + 1  
     return sorted(answer.items())
 
-print(pregunta_02())
 
 

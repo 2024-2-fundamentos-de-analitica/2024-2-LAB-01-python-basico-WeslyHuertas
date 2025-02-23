@@ -46,5 +46,3 @@ def pregunta_06():
                     valores[letra] = (min(min_val, valor), max(max_val, valor))
                 
     return sorted([(letra, min_val, max_val) for letra, (min_val, max_val) in valores.items()])
-
-print(pregunta_06())

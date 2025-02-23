@@ -37,5 +37,4 @@ def pregunta_09():
     return content
                 
 
-print(pregunta_09())
 

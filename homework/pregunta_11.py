@@ -16,7 +16,7 @@ def pregunta_11():
 
 
     """
-    data = Functions.load_data()
+    data = Functions.load_data('../files/input/data.csv')
     column_1, column_4 = Functions.extract_multiple_columns([1, 3], data)
     parsed_column_4 = Functions.parse_column(column_4, ",")
 

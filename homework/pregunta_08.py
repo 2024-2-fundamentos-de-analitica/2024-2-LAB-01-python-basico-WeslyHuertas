@@ -46,4 +46,3 @@ def pregunta_08():
     
     return rpta
 
-print(pregunta_08())

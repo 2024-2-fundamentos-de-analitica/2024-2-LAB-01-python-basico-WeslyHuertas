@@ -22,6 +22,5 @@ def pregunta_01():
         for fila in lector:
             suma += float(fila[0].split('\t')[1])  # Convertir la segunda columna a float y sumar
     return suma
-
-print(pregunta_01())        
+      
 
