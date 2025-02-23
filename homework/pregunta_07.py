@@ -40,4 +40,3 @@ def pregunta_07():
             dict2 = sorted(dict.items())
     return dict2 
 
-print(pregunta_07())
