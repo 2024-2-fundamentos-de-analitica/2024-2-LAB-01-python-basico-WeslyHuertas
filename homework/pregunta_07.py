@@ -4,7 +4,19 @@ datos requeridos se encuentran en el archivo data.csv. En este laboratorio
 solo puede utilizar las funciones y librerias basicas de python. No puede
 utilizar pandas, numpy o scipy.
 """
-import csv
+
+import sys
+import os
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from function.functions import (
+    load_data,
+    column_mapper_3,
+    shuffle_and_sort,
+    reducer_2,
+    extract_multiple_columns
+)
 
 def pregunta_07():
     """
@@ -25,18 +37,11 @@ def pregunta_07():
      (9, ['A', 'B', 'E', 'A', 'A', 'C'])]
 
     """
-    with open("../files/input/data.csv", mode="r") as archivo:
-        lector = csv.reader(archivo, delimiter="\t")
-        
-        dict = {}
-        for row in lector:
-            numbers = set(row[1])
-            numbers = [int(i) for i in numbers]
-            for number in numbers:
-                if number in dict:
-                    dict[number].append(row[0])
-                else:
-                    dict[number] = [row[0]]
-            dict2 = sorted(dict.items())
-    return dict2 
+
+    data = load_data()
+    column_2, column_1 = extract_multiple_columns(range(2), data)
+    content = column_mapper_3(column_1, column_2)
+    content = shuffle_and_sort(content)
+    content = reducer_2(content)
+    return content
 

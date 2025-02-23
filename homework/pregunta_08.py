@@ -4,7 +4,18 @@ datos requeridos se encuentran en el archivo data.csv. En este laboratorio
 solo puede utilizar las funciones y librerias basicas de python. No puede
 utilizar pandas, numpy o scipy.
 """
-import csv
+import sys
+import os
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from function.functions import (
+    load_data,
+    column_mapper_3,
+    shuffle_and_sort,
+    reducer_3,
+    extract_multiple_columns
+)
 
 def pregunta_08():
     """
@@ -27,22 +38,11 @@ def pregunta_08():
      (9, ['A', 'B', 'C', 'E'])]
 
     """
+    data = load_data()
+    column_2, column_1 = extract_multiple_columns(range(2), data)
+    content = column_mapper_3(column_1, column_2)
+    content = shuffle_and_sort(content)
+    content = reducer_3(content)
+    return content
 
-    rpta = []
-    with open('../files/input/data.csv', 'r') as file:
-        data = {}
-        for line in file:
-            columns = line.strip().split('\t')
-            value = int(columns[1])
-            letter = columns[0]
-            if value in data:
-                if letter not in data[value]:
-                    data[value].append(letter)
-            else:
-                data[value] = [letter]
-    
-    for value, letters in sorted(data.items()):
-        rpta.append((value, sorted(letters)))
-    
-    return rpta
-
+print(pregunta_08())

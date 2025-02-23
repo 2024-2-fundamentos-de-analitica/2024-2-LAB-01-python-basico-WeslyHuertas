@@ -4,45 +4,53 @@ datos requeridos se encuentran en el archivo data.csv. En este laboratorio
 solo puede utilizar las funciones y librerias basicas de python. No puede
 utilizar pandas, numpy o scipy.
 """
-import csv
+"""
+La columna 5 codifica un diccionario donde cada cadena de tres letras
+corresponde a una clave y el valor despues del caracter `:` corresponde al
+valor asociado a la clave. Por cada clave, obtenga el valor asociado mas
+pequeño y el valor asociado mas grande computados sobre todo el archivo.
+
+
+Rta/
+[('aaa', 1, 9),
+    ('bbb', 1, 9),
+    ('ccc', 1, 10),
+    ('ddd', 0, 9),
+    ('eee', 1, 7),
+    ('fff', 0, 9),
+    ('ggg', 3, 10),
+    ('hhh', 0, 9),
+    ('iii', 0, 9),
+    ('jjj', 5, 17)]
+
+"""
+
+import sys
+import os
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from function.functions import (
+    load_data,
+    extract_column,
+    column_mapper_2,
+    shuffle_and_sort,
+    max_min_reducer,
+    parse_column,
+    parse_to_one_column,
+    extract_multiple_columns
+)
 
 def pregunta_06():
-    """
-    La columna 5 codifica un diccionario donde cada cadena de tres letras
-    corresponde a una clave y el valor despues del caracter `:` corresponde al
-    valor asociado a la clave. Por cada clave, obtenga el valor asociado mas
-    pequeño y el valor asociado mas grande computados sobre todo el archivo.
+    data = load_data()
+    column = extract_column(4, data)
+    parsed_column = parse_column(column, ",")
+    stuck_column = parse_to_one_column(parsed_column)
+    content = parse_column(stuck_column, ":")
+    key, values= extract_multiple_columns(range(2), content)
+    content = column_mapper_2(key, values)
+    content = shuffle_and_sort(content)
+  
+    return max_min_reducer(content, reversed= True)
 
-    Rta/
-    [('aaa', 1, 9),
-     ('bbb', 1, 9),
-     ('ccc', 1, 10),
-     ('ddd', 0, 9),
-     ('eee', 1, 7),
-     ('fff', 0, 9),
-     ('ggg', 3, 10),
-     ('hhh', 0, 9),
-     ('iii', 0, 9),
-     ('jjj', 5, 17)]
-
-    """
-
-    # Leer el archivo CSV
-    with open("C:/Users/user/Documents/Analitica_de_datos/2024-2-LAB-01-python-basico-WeslyHuertas/files/input/data.csv", 'r') as archivo:
-        lector = csv.reader(archivo, delimiter=' ')
-        valores = {}
-        for fila in lector:
-            line = fila[0].split('\t')[4]
-            # Convertir a diccionario
-            line_dict = {clave: int(valor) for clave, valor in (item.split(":") for item in line.split(","))}
-            for letra in line_dict.keys():
-                valor = line_dict[letra] 
-                # Si la letra no está en el diccionario, inicializar con (valor, valor)
-                if letra not in valores:
-                    valores[letra] = (valor, valor)
-                else:
-                    # Actualizar los valores mínimo y máximo
-                    min_val, max_val = valores[letra]
-                    valores[letra] = (min(min_val, valor), max(max_val, valor))
-                
-    return sorted([(letra, min_val, max_val) for letra, (min_val, max_val) in valores.items()])
+print(pregunta_06())

@@ -4,7 +4,20 @@ datos requeridos se encuentran en el archivo data.csv. En este laboratorio
 solo puede utilizar las funciones y librerias basicas de python. No puede
 utilizar pandas, numpy o scipy.
 """
-import csv
+
+import sys
+import os
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from function.functions import (
+    load_data,
+    extract_column,
+    parse_column,
+    column_mapper_1,
+    shuffle_and_sort,
+    reducer
+)
 
 def pregunta_04():
     """
@@ -27,13 +40,15 @@ def pregunta_04():
 
     """
 
-    # Leer el archivo CSV
-    with open("C:/Users/user/Documents/Analitica_de_datos/2024-2-LAB-01-python-basico-WeslyHuertas/files/input/data.csv", 'r') as archivo:
-        lector = csv.reader(archivo, delimiter=' ')
-        answer = {}
-        for fila in lector:
-            line = fila[0].split('\t')
-            month = line[2].split("-")[1]
-            answer[month] = answer.get(month, 0) + 1 
-    return sorted(answer.items())
+    data = load_data()
+    column = extract_column(2, data)
+    dates = parse_column(column, "-")
+    months = extract_column(1, dates)
+    content = column_mapper_1(months)
+    content = shuffle_and_sort(content)
+    content = reducer(content)
 
+    return content
+
+
+print(pregunta_04())
